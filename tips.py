@@ -16,3 +16,17 @@ www.baidu.com
 helloworld	python
 end
 '''
+
+
+a=10
+b='abc'
+c=input("输入：")
+print(type(a))
+print(type(b))
+print(type(c))
+'''
+输入：123
+<class 'int'>
+<class 'str'>
+<class 'str'>
+'''
