@@ -17,6 +17,9 @@ import urllib.parse
 # response = urllib.request.urlopen("http://httpbin.org/post",data=data)
 # print(response.read().decode("utf-8"))
 
-
-response = urllib.request.urlopen("http://httpbin.org/get")
-print(response.read().decode("utf-8"))
+# 超时处理
+try:
+    response = urllib.request.urlopen("http://httpbin.org/get",timeout=0.01)
+    print(response.read().decode("utf-8"))
+except urllib.error.URLError as e:
+    print("time out!")
