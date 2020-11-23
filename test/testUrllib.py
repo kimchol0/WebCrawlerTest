@@ -13,6 +13,10 @@ import urllib.request
 # 获取一个POST请求
 import urllib.parse
 
-data = bytes(urllib.parse.urlencode({"hello": "world"}), encoding="utf-8")
-response = urllib.request.urlopen("http://httpbin.org/post",data=data)
+# data = bytes(urllib.parse.urlencode({"hello": "world"}), encoding="utf-8")
+# response = urllib.request.urlopen("http://httpbin.org/post",data=data)
+# print(response.read().decode("utf-8"))
+
+
+response = urllib.request.urlopen("http://httpbin.org/get")
 print(response.read().decode("utf-8"))
