@@ -24,7 +24,16 @@ import urllib.parse
 # except urllib.error.URLError as e:
 #     print("time out!")
 
-response = urllib.request.urlopen("http://httpbin.org/get")
-print(response.status)
-print(response.getheaders())
-print(response.getheader("Server"))
+# response = urllib.request.urlopen("http://httpbin.org/get")
+# print(response.status)
+# print(response.getheaders())
+# print(response.getheader("Server"))
+
+url = "http://www.douban.com"
+headers = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36",
+}
+req = urllib.request.Request(url=url,
+                             headers=headers)
+response = urllib.request.urlopen(req)
+print(response.read().decode("utf-8"))
