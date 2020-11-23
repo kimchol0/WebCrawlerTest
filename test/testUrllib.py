@@ -18,8 +18,13 @@ import urllib.parse
 # print(response.read().decode("utf-8"))
 
 # 超时处理
-try:
-    response = urllib.request.urlopen("http://httpbin.org/get",timeout=0.01)
-    print(response.read().decode("utf-8"))
-except urllib.error.URLError as e:
-    print("time out!")
+# try:
+#     response = urllib.request.urlopen("http://httpbin.org/get",timeout=0.01)
+#     print(response.read().decode("utf-8"))
+# except urllib.error.URLError as e:
+#     print("time out!")
+
+response = urllib.request.urlopen("http://httpbin.org/get")
+print(response.status)
+print(response.getheaders())
+print(response.getheader("Server"))
