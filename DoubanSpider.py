@@ -17,7 +17,7 @@ def main():
     datalist = getData(baseurl)
     savepath = ".\\豆瓣电影Top250.xls"
     # 保存数据
-    # saveData(savepath)
+    saveData(datalist, savepath)
     # askURL("https://movie.douban.com/top250")
 
 
@@ -73,7 +73,7 @@ def getData(baseurl):
 
             datalist.append(data)  # 把处理好的一步电影信息放入datalist
         for item in datalist:
-                print(item)
+            print(item)
     return datalist
 
 
@@ -96,10 +96,22 @@ def askURL(url):
 
 
 # 保存数据
-def saveData(savepath):
-    print("132")
+def saveData(datalist, savepath):
+    print("save...")
+    book = xlwt.Workbook(encoding='utf-8', style_compression=0)
+    sheet = book.add_sheet('豆瓣电影Top250', cell_overwrite_ok=True)
+    col = ("电影详情链接", "图片链接", "影片中文名", "影片外国名", "评分", "评价数", "概况", "相关信息")
+    for i in range(0, 8):
+        sheet.write(0, i, col[i])  # 列名
+    for i in range(0, 250):
+        print("第%d条" % (i+1))
+        data = datalist[i]
+        for j in range(0, 8):
+            sheet.write(i + 1, j, data[j])  # 数据
+    book.save(savepath)  # 保存
 
 
 if __name__ == "__main__":  # 如果执行主函数，且运行函数名称为main时
     # 调用函数
     main()
+    print("爬取完毕！")
