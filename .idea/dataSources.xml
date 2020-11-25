@@ -7,5 +7,17 @@
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
       <jdbc-url>jdbc:sqlite:D:\workspace\pythonpa\demo1\test\test.db</jdbc-url>
     </data-source>
+    <data-source source="LOCAL" name="movietest.db" uuid="8da5c1fd-8e66-46cd-b12c-1c6dd7c6c25f">
+      <driver-ref>sqlite.xerial</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
+      <jdbc-url>jdbc:sqlite:D:\workspace\pythonpa\demo1\movietest.db</jdbc-url>
+    </data-source>
+    <data-source source="LOCAL" name="movie.db" uuid="870716a8-003b-4de3-8539-0bda41153d9a">
+      <driver-ref>sqlite.xerial</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
+      <jdbc-url>jdbc:sqlite:D:\workspace\pythonpa\demo1\movie.db</jdbc-url>
+    </data-source>
   </component>
 </project>

@@ -15,10 +15,9 @@ def main():
     baseurl = "https://movie.douban.com/top250?start="
     # 爬取网页
     datalist = getData(baseurl)
-    savepath = ".\\豆瓣电影Top250.xls"
+    dbpath = "movie.db"
     # 保存数据
-    saveData(datalist, savepath)
-    # askURL("https://movie.douban.com/top250")
+    saveData2DB(datalist, dbpath)
 
 
 findLink = re.compile(r'<a href="(.*?)">')  # 创建正则表达式（影片详情链接的规则）
@@ -94,24 +93,60 @@ def askURL(url):
             print(e.reason)
     return html
 
+def saveData2DB(datalist, dbpath):
+    init_db(dbpath)
+    conn = sqlite3.connect(dbpath)
+    cur = conn.cursor()
+    for data in datalist:
+        for index in range(len(data)):
+            if index == 4 or index ==5:
+                continue
+            data[index] = '"' + data[index] + '"'
+        sql = '''
+                insert into movie250
+                (
+                    info_link,pic_link,cname,ename,score,rated,instroduction,info)
+                values
+                (
+                    %s
+                )
+            ''' % ",".join(data)  # 把data列表中每一个中间都用逗号连接起来，%表示填补前面的%s中的内容
+        print(sql)
+        cur.execute(sql)
+        conn.commit()
+    cur.close()
+    conn.close()
+    print("---")
 
-# 保存数据
-def saveData(datalist, savepath):
-    print("save...")
-    book = xlwt.Workbook(encoding='utf-8', style_compression=0)
-    sheet = book.add_sheet('豆瓣电影Top250', cell_overwrite_ok=True)
-    col = ("电影详情链接", "图片链接", "影片中文名", "影片外国名", "评分", "评价数", "概况", "相关信息")
-    for i in range(0, 8):
-        sheet.write(0, i, col[i])  # 列名
-    for i in range(0, 250):
-        print("第%d条" % (i+1))
-        data = datalist[i]
-        for j in range(0, 8):
-            sheet.write(i + 1, j, data[j])  # 数据
-    book.save(savepath)  # 保存
+
+def init_db(dbpath):
+    sql1 = '''
+        drop table movie250
+    '''
+    sql2 = '''
+        create table movie250
+        (
+            id integer primary key autoincrement,
+            info_link text,
+            pic_link text,
+            cname varchar,
+            ename varchar,
+            score numeric,
+            rated numeric,
+            instroduction text,
+            info text
+        )
+    '''  # 创建数据表
+    conn = sqlite3.connect(dbpath)
+    cursor = conn.cursor()
+    cursor.execute(sql1)
+    cursor.execute(sql2)
+    conn.commit()
+    conn.close()
 
 
 if __name__ == "__main__":  # 如果执行主函数，且运行函数名称为main时
     # 调用函数
     main()
+    # init_db("movietest.db")
     print("爬取完毕！")
